@@ -25,3 +25,6 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 - [x] May 21, 2024
   - [x] 4.1 Blog List, step 1
   - [x] 4.2 Blog List, step 2 Refactor the application into separate modules (NB: not use express.Router())
+- [x] May 22, 2024
+  - [x] 4.2 Blog List,  use express.Router() in this application to controll route
+  - [ ] todo
