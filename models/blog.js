@@ -1,22 +1,11 @@
 const mongoose = require("mongoose");
 
-const config = require("../utils/config");
-const logger = require("../utils/logger");
 const blogSchema = new mongoose.Schema({
   title: String,
   author: String,
   url: String,
   likes: Number,
 });
-
-mongoose
-  .connect(config.MONGODB_URI)
-  .then(() => {
-    logger.info("succeeded to connect MongoDB");
-  })
-  .catch((error) => {
-    logger.error("error connecting to MongoDB:", error.message);
-  });
 
 /**
  * 处理之前的数据
