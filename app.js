@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require("express-async-errors");
 const cors = require("cors");
 const logger = require("./utils/logger.js");
 const Blog = require("./models/blog.js");
@@ -23,24 +24,54 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-blogsRouter.get("/", (request, response, next) => {
-  Blog.find({})
-    .then((blogs) => {
-      response.json(blogs);
-      // logger.info(blogs[0]._id)
-    })
-    .catch((error) => next(error));
+blogsRouter.get("/", async (request, response, next) => {
+  const blogs = await Blog.find({});
+  response.json(blogs);
 });
 
-blogsRouter.post("/", (request, response, next) => {
+blogsRouter.post("/", async (request, response, next) => {
+  // XXXX 为了通过测试
+  if (!request.body.title || !request.body.url) {
+    // NB 要加end()
+    response.status(400).end();
+    return;
+  }
+  if (request.body.likes) {
+    request.body.likes = 0;
+  }
   const blog = new Blog(request.body);
+  const saveBlog = await blog.save();
+  response.status(201).json(saveBlog);
+});
 
-  blog
-    .save()
-    .then((result) => {
-      response.status(201).json(result);
-    })
-    .catch((error) => next(error));
+// 通过id查找blog
+blogsRouter.get("/:id", async (request, response) => {
+  const blog = await Blog.findById(request.params.id);
+  console.log(blog);
+  response.json(blog).end();
+});
+
+// 删除博客
+blogsRouter.delete("/:id", async (request, response) => {
+  await Blog.findByIdAndDelete(request.params.id);
+  response.status(204).end();
+});
+
+// 更新
+blogsRouter.put("/:id", async (request, response) => {
+  const { title, author, url, likes } = { ...request.body };
+  // NB 注意参数的传递
+  const updateBlog = await Blog.findByIdAndUpdate(
+    request.params.id,
+    {
+      title,
+      author,
+      url,
+      likes,
+    },
+    { new: true, runValidators: true, context: "query" }
+  );
+  response.json(updateBlog).end();
 });
 
 // TODO
