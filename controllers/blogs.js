@@ -1,8 +1,9 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog.js");
+const User = require("../models/user");
 
 blogsRouter.get("/", async (request, response, next) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs);
 });
 
@@ -16,8 +17,15 @@ blogsRouter.post("/", async (request, response, next) => {
   if (request.body.likes) {
     request.body.likes = 0;
   }
-  const blog = new Blog(request.body);
+
+  const user = await User.findById(request.body.userId);
+  const { title, likes, author, url } = { ...request.body };
+
+  const blog = new Blog({ title, likes, author, url, user: user.id });
   const saveBlog = await blog.save();
+  // NB  存储id
+  user.blogs = user.blogs.concat(saveBlog._id);
+  await user.save();
   response.status(201).json(saveBlog);
 });
 

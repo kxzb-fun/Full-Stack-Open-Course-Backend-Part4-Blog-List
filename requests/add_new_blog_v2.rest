@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "知道是谁写的",
+  "author": "kxzzb",
+  "url": "tes999t",
+  "likes": 0,
+  "userId": "66503da440127767a73a8921"
+}

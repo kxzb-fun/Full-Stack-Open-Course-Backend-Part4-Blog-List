@@ -34,3 +34,4 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
   - [x] Blog List part c, add user Schema, add post api and get api
   - [x] Blog List part c, add fresh user test TDD(Test-Driven Development)
   - [x] Blog List part c, add bcrypt package
+  - [x] Blog List part c, add populate
