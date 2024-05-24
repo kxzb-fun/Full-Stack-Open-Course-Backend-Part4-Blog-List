@@ -28,7 +28,6 @@ test("blogs are returned as json", async () => {
 // 4.9 NB TODO
 test('Blog post identifier property should be named "id', async () => {
   const validNonexistingId = await nonExistingId();
-  s;
   const res = await api.get(`/api/blogs/${validNonexistingId}`).expect(200);
   assert.strictEqual(res.body, null);
 });
