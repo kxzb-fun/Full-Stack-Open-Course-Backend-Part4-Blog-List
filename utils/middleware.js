@@ -18,6 +18,14 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: "malformatted id" });
   } else if (error.name === "ValidationError") {
     return response.status(400).json({ error: error.message });
+    // Mongoose 验证不会检测索引违规，它们返回的不是 ValidationError，而是 MongoServerError 类型的错误。因此，我们需要针对这种情况扩展错误处理程序：
+  } else if (
+    error.name === "MongoServerError" &&
+    error.message.includes("E11000 duplicate key error")
+  ) {
+    return response
+      .status(400)
+      .json({ error: "expected `username` to be unique" });
   }
 
   next(error);

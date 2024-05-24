@@ -30,3 +30,7 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 - [x] May 23, 2024
   - [x] Blog List part b, 4.8-4.12 1h
   - [x] Blog List part b, 4.13-4.14 2.5h
+- [x] May 24, 2024
+  - [x] Blog List part c, add user Schema, add post api and get api
+  - [x] Blog List part c, add fresh user test TDD(Test-Driven Development)
+  - [x] Blog List part c, add bcrypt package

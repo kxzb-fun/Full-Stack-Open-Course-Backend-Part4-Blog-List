@@ -5,6 +5,7 @@ const cors = require("cors");
 const logger = require("./utils/logger.js");
 const Blog = require("./models/blog.js");
 const blogsRouter = require("./controllers/blogs.js");
+const usersRouter = require('./controllers/users')
 const config = require("./utils/config");
 const middleware = require("./utils/middleware.js");
 // monggodb connect
@@ -76,7 +77,11 @@ blogsRouter.put("/:id", async (request, response) => {
 
 // TODO
 // app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
 
 app.use("/api/blogs", blogsRouter);
+app.use("/api/users", usersRouter);
+
+// NB 这个要放在最后 导出之前
+app.use(middleware.errorHandler);
+
 module.exports = app;
