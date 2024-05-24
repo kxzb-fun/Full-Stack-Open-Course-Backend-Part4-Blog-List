@@ -4,6 +4,11 @@ const User = require("../models/user");
 
 usersRouter.post("/", async (request, response) => {
   const { username, name, password } = request.body;
+  // 校验密码规则
+  if(!password || password.length < 3) {
+    response.status(400).end('password is need and at least 3 characters long')
+    return
+  }
 
   const saltRounds = 10;
   //   请求中发送的密码不存储在数据库中。我们存储使用 bcrypt.hash 函数生成的密码的哈希值。

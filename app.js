@@ -25,6 +25,12 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
+// use the middleware in all routes
+// app.use(middleware.userExtractor)
+
+// use the middleware only in /api/blogs routes
+// app.use('/api/blogs', middleware.userExtractor, blogsRouter)
+
 app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use('/api/login', loginRouter);

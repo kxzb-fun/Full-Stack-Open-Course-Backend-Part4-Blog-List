@@ -2,21 +2,22 @@ const blogsRouter = require("express").Router();
 const Blog = require("../models/blog.js");
 const User = require("../models/user");
 const jwt = require('jsonwebtoken')
+const middleware = require('../utils/middleware.js');
 
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.replace('Bearer ', '')
-  }
-  return null
-}
+// const getTokenFrom = request => {
+//   const authorization = request.get('authorization')
+//   if (authorization && authorization.startsWith('Bearer ')) {
+//     return authorization.replace('Bearer ', '')
+//   }
+//   return null
+// }
 
 blogsRouter.get("/", async (request, response, next) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs);
 });
 
-blogsRouter.post("/", async (request, response, next) => {
+blogsRouter.post("/", middleware.userExtractor, async (request, response, next) => {
   // XXXX 为了通过测试
   if (!request.body.title || !request.body.url) {
     // NB 要加end()
@@ -27,7 +28,8 @@ blogsRouter.post("/", async (request, response, next) => {
     request.body.likes = 0;
   }
 
-  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  // const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }

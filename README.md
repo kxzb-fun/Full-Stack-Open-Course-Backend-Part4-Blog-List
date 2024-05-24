@@ -38,3 +38,4 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
   - [x] Blog List part d, add jsonwebtoken and login api
   - [x] Blog List part d, create  blog with logined user (use Bearer token)
   - [x] Blog List part d, Problems of Token-based authentication, set 1 hour token expires
+  - [x] Blog List part d, add 401 test, create user params test, fixed bugs"
