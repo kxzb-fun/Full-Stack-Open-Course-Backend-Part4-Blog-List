@@ -75,13 +75,11 @@ blogsRouter.put("/:id", async (request, response) => {
   response.json(updateBlog).end();
 });
 
-// TODO
-// app.use(middleware.unknownEndpoint);
-
 app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 
 // NB 这个要放在最后 导出之前
+app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 module.exports = app;
