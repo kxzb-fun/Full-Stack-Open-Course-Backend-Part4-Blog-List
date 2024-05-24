@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs HTTP/1.1
+# header name: header value
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY2NTAzZGE0NDAxMjc3NjdhNzNhODkyMSIsImlhdCI6MTcxNjU0MDcxMX0.QypR7vuSEVbgg1-RYsWVqOHaakRNGxTDV4KA_Pomgjw
+
+# content
+{
+  "title": "知道是谁写的dnfkdn",
+  "author": "kxzzb",
+  "url": "tes99dsdd9t",
+  "likes": 0
+}
+
