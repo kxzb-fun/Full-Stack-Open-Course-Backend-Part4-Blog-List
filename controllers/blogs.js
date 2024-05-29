@@ -13,7 +13,8 @@ const middleware = require('../utils/middleware.js');
 // }
 
 blogsRouter.get("/", async (request, response, next) => {
-  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
+  const blogs = await Blog.find({}).sort({ likes: -1 }); // 按照 likes 数值降序排序
+  // .populate('user', { username: 1, name: 1 })
   response.json(blogs);
 });
 
@@ -24,7 +25,7 @@ blogsRouter.post("/", middleware.userExtractor, async (request, response, next) 
     response.status(400).end();
     return;
   }
-  if (request.body.likes) {
+  if (!request.body.likes) {
     request.body.likes = 0;
   }
 
