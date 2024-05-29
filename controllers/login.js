@@ -7,6 +7,11 @@ loginRouter.post("/", async (request, response) => {
   const { username, password } = request.body;
 
   const user = await User.findOne({ username });
+  if(!user) {
+    return response.status(401).json({
+      error: "invalid username or password",
+    });
+  }
   // 由于密码本身不会保存到数据库中，而是根据密码计算出哈希值，因此使用 bcrypt.compare 方法来检查密码是否正确
   const passwordCorrect =
     password === null
